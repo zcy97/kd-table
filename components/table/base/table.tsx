@@ -185,7 +185,7 @@ export class BaseTable extends React.Component<BaseTableProps, BaseTableState> {
     getRowProps: noop,
     dataSource: [] as any[],
 
-    useOuterBorder: true
+    useOuterBorder: true,
 
   }
 
