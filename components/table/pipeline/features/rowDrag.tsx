@@ -251,8 +251,8 @@ export function rowDrag (opt:RowDragFeatureOptions) {
       }
 
       const handleDragMove = (mouseMoveEvent: MouseEvent) => {
-        const direction = pipeline.ctx.direction
-        positionDragElemment(dragElement, mouseMoveEvent, direction) // 更新拖拽悬浮框位置
+        const isRTL = pipeline.ctx.direction === 'rtl'
+        positionDragElemment(dragElement, mouseMoveEvent, isRTL) // 更新拖拽悬浮框位置
         rowDragApi.setDragStatus('dragging')
         setDragElementIcon(dragElement, 'move')
 
@@ -611,9 +611,8 @@ function hiddenDragLine (lineElement) {
   lineElement.style.display = 'none'
 }
 
-function positionDragElemment (element: HTMLElement, event: MouseEvent, direction: string) {
+function positionDragElemment (element: HTMLElement, event: MouseEvent, isRTL: boolean) {
   if (!element) return
-  const isRTL = direction === 'rtl'
   const elementRect = element.getBoundingClientRect()
   const eleHeight = elementRect.height
   const browserWidth = document.body?.clientWidth ?? (window.innerHeight || document.documentElement?.clientWidth || 0)
@@ -636,7 +635,7 @@ function positionDragElemment (element: HTMLElement, event: MouseEvent, directio
     right = Math.max(browserWidth + windowScrollX - element.clientWidth, 0)
   }
   if (isRTL) {
-    element.style.cssText += `;width: 100%; right: ${right}px; top: ${top}px;`
+    element.style.cssText += `;right: ${right}px; top: ${top}px;`
     return
   }
   element.style.left = `${left}px`
